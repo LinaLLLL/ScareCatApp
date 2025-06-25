@@ -46,9 +46,8 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    // ML Kit для распознавания объектов
-    implementation("com.google.mlkit:object-detection:17.0.0")
-    implementation("com.google.mlkit:object-detection-custom:17.0.0")
+    // ML Kit Image Labeling
+    implementation("com.google.mlkit:image-labeling:17.0.7")
     // Библиотека для работы с изображениями
     implementation("com.google.mlkit:image-labeling-custom:17.0.2")
 
