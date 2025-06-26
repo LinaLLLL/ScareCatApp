@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">ScareCat</string>
     <string name="contentDescription">Error</string>
+    <string name="btn_detector">Найти кота</string>
+    <string name="btn_sound">Выбрать звук</string>
+    <string name="gallery">Галлерея</string>
+
+
 </resources>

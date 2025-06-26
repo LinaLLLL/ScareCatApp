@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/BG_Detector"
     tools:context=".MainActivity">
 
 
@@ -12,6 +13,7 @@
         android:id="@+id/preview"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="100dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

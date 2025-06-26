@@ -4,7 +4,7 @@
         <style name="Theme.ScareCat" parent="Theme.Material3.DayNight.NoActionBar">
                 <!-- Для Android 12+ -->
                 <item name="android:windowSplashScreenBackground">@color/BG_startActivity</item>
-                <item name="android:windowSplashScreenAnimatedIcon">@drawable/cat_logo</item>
+                <item name="android:windowSplashScreenAnimatedIcon">@drawable/cat_logo_splash</item>
                 <item name="android:windowSplashScreenBrandingImage">@null</item>
                 <item name="android:windowSplashScreenAnimationDuration">500</item> <!-- 0.5 сек -->
         </style>

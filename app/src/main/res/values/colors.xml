@@ -2,5 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="BG_startActivity">#042966</color>
+    <color name="BG_startActivity">#D2C2F2</color>
+    <color name="btn_color">#B28DD9</color>
+    <color name="BG_Detector">#1C1C1F</color>
 </resources>
