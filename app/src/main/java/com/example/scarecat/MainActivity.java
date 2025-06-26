@@ -1,10 +1,13 @@
 package com.example.scarecat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,7 +33,10 @@ public class MainActivity extends AppCompatActivity {
     private PreviewView previewView;
     private CatDetector catDetector;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+    private ImageButton btnFlipCamera;
+    private CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         previewView = findViewById(R.id.preview);
 
         catDetector = new CatDetector(this);
+
+        btnFlipCamera = findViewById(R.id.btn_flip_camera);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) //запрос разрешения на камеру
                 != PackageManager.PERMISSION_GRANTED) {
@@ -68,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
                 imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this), this::analyzeImage);
 
-                CameraSelector cameraSelector = new CameraSelector.Builder() //выбираем заднюю камеру
-                        .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                        .build();
+//                CameraSelector cameraSelector = new CameraSelector.Builder() //выбираем заднюю камеру
+//                        .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+//                        .build();
 
                 cameraProvider.unbindAll(); //отвязываем предыдущие камеры если были
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis); // привязываем к жизненному циклу
@@ -79,6 +87,30 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("MainActivity", "Ошибка запуска камеры", e);
             }
         }, ContextCompat.getMainExecutor(this));
+    }
+
+    public void switchCamera(View V) {
+        // Переключаем камеру
+        cameraSelector = (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA)
+                ? CameraSelector.DEFAULT_FRONT_CAMERA
+                : CameraSelector.DEFAULT_BACK_CAMERA;
+
+        // Проверяем доступность камеры
+        try {
+            if (!cameraProviderFuture.get().hasCamera(cameraSelector)) {
+                Toast.makeText(this, "Камера не доступна", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } catch (Exception e) {
+            Log.e("MainActivity", "Ошибка проверки камеры", e);
+            return;
+        }
+
+        // Перезапускаем камеру
+        startCamera();
+
+        // Анимация кнопки (опционально)
+        btnFlipCamera.animate().rotationBy(180f).setDuration(300).start();
     }
 
     @OptIn(markerClass = ExperimentalGetImage.class)

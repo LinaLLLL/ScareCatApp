@@ -5,4 +5,5 @@
     <color name="BG_startActivity">#D2C2F2</color>
     <color name="btn_color">#B28DD9</color>
     <color name="BG_Detector">#1C1C1F</color>
+    <color name="btn_photo">#7D7D81</color>
 </resources>

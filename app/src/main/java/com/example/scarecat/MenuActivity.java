@@ -41,7 +41,7 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ChangeSoundActivity.class);
         startActivity(intent);
     }
-    //метод для перехода на страницу галлереи
+    //метод для перехода на страницу галереи
     public void goGalleryActivity(View v){
         Intent intent = new Intent(this, GalleryActivity.class);
         startActivity(intent);

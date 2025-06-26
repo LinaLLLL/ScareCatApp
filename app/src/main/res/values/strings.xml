@@ -3,7 +3,6 @@
     <string name="contentDescription">Error</string>
     <string name="btn_detector">Найти кота</string>
     <string name="btn_sound">Выбрать звук</string>
-    <string name="gallery">Галлерея</string>
-
-
+    <string name="gallery">Галерея</string>
+    <string name="empty_gallery">Галерея пуста</string>
 </resources>
