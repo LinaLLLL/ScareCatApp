@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ScareCat</string>
+    <string name="contentDescription">Error</string>
 </resources>
