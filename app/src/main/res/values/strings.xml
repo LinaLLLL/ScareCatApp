@@ -1,11 +1,18 @@
 <resources>
     <string name="app_name">ScareCat</string>
     <string name="contentDescription">Error</string>
+
     <string name="btn_detector">Найти кота</string>
     <string name="btn_sound">Выбрать звук</string>
+
     <string name="first_sound">Спокойная</string>
     <string name="second_sound">Сирена</string>
     <string name="third_sound">Крик</string>
+
     <string name="Change_sound">Выберите звук</string>
+
     <string name="confirmation">Подтвердить</string>
+
+    <string name="emptyGallery">Галерея пуста</string>
+    <string name="btn_Gallery">Галерея</string>
 </resources>

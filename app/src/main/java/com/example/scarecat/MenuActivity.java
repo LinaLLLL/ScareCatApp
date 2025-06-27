@@ -44,6 +44,12 @@ public class MenuActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_SELECT_SOUND);
     }
 
+    //метод для перехода на страницу галереи
+    public void goGalleryActivity(View v){
+        Intent intent = new Intent(this, GalleryActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

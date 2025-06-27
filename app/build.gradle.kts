@@ -55,7 +55,8 @@ dependencies {
     implementation("com.google.mlkit:image-labeling:17.0.7")
     // Библиотека для работы с изображениями
     implementation("com.google.mlkit:image-labeling-custom:17.0.2")
-
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
     // CameraX core library
     implementation("androidx.camera:camera-core:$cameraxVersion")
     // CameraX Camera2 implementation

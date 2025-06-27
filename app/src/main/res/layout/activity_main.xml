@@ -37,5 +37,19 @@
         app:srcCompat="@drawable/flip"
         app:tint="@color/white" />
 
+    <ImageButton
+        android:id="@+id/btn_gallery_in_camera"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#00FFFFFF"
+        android:scaleType="centerCrop"
+        android:onClick="goGalleryActivity"
+        android:contentDescription="@string/contentDescription"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

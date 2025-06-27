@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CAMERA = 1001; //константа для идентификации запроса разрешения на камеру
     private PreviewView previewView;
     private CatDetector catDetector;
+    private ImageButton btnGalleryInCamera;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageButton btnFlipCamera;
     private CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         previewView = findViewById(R.id.preview);
 
         btnFlipCamera = findViewById(R.id.btn_flip_camera);
-
+        btnGalleryInCamera = findViewById(R.id.btn_gallery_in_camera);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) //запрос разрешения на камеру
                 != PackageManager.PERMISSION_GRANTED) {
@@ -184,5 +185,10 @@ public class MainActivity extends AppCompatActivity {
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startCamera();
         }
+    }
+    //метод для перехода на страницу галереи
+    public void goGalleryActivity(View v){
+        Intent intent = new Intent(this, GalleryActivity.class);
+        startActivity(intent);
     }
 }

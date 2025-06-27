@@ -68,6 +68,19 @@
             android:text="@string/btn_sound"
             android:textColor="@color/black" />
 
+        <Button
+            android:id="@+id/btn_gallery"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50sp"
+            android:layout_marginTop="20sp"
+            android:layout_marginEnd="50sp"
+            android:backgroundTint="@color/btn_color"
+            android:onClick="goGalleryActivity"
+            android:text="@string/btn_Gallery"
+            android:textColor="@color/black" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
