@@ -7,6 +7,11 @@
         android:required="true" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<!--    <activity android:name=".MusicSelectionActivity"-->
+<!--        android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
+<!--        tools:ignore="MissingClass" />-->
 
     <application
         android:allowBackup="true"
@@ -17,9 +22,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ScareCat"
         tools:targetApi="31">
-        <activity
-            android:name=".GalleryActivity"
-            android:exported="false" />
         <activity
             android:name=".ChangeSoundActivity"
             android:exported="false" />

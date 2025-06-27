@@ -6,4 +6,6 @@
     <color name="btn_color">#B28DD9</color>
     <color name="BG_Detector">#1C1C1F</color>
     <color name="btn_photo">#7D7D81</color>
+    <color name="music_item_bg">#1E1E1E</color>
+    <color name="btn_color_selected">#AF62BA</color>
 </resources>

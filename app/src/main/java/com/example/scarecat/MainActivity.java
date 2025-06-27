@@ -2,6 +2,7 @@ package com.example.scarecat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageButton btnFlipCamera;
     private CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
+    private static final int REQUEST_CODE_SELECT_SOUND = 123;
+    private int selectedSoundResId = R.raw.cat_sound_first; // значение по умолчанию
+
+
+
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -44,9 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
         previewView = findViewById(R.id.preview);
 
-        catDetector = new CatDetector(this);
-
         btnFlipCamera = findViewById(R.id.btn_flip_camera);
+
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) //запрос разрешения на камеру
                 != PackageManager.PERMISSION_GRANTED) {
@@ -54,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             startCamera();
         }
+
+        int soundResId = getIntent().getIntExtra("sound_res_id", R.raw.cat_sound_first);
+        Log.d("MainActivity", "Получен звук: " + soundResId);
+        catDetector = new CatDetector(this, soundResId);
+
     }
 
     private void startCamera() {
@@ -75,10 +85,6 @@ public class MainActivity extends AppCompatActivity {
                         .build();
 
                 imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this), this::analyzeImage);
-
-//                CameraSelector cameraSelector = new CameraSelector.Builder() //выбираем заднюю камеру
-//                        .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-//                        .build();
 
                 cameraProvider.unbindAll(); //отвязываем предыдущие камеры если были
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis); // привязываем к жизненному циклу
@@ -127,9 +133,9 @@ public class MainActivity extends AppCompatActivity {
         catDetector.detectCats(inputImage, new CatDetector.DetectionCallback() {
             @Override
             public void onCatDetected(float confidence) {
-                runOnUiThread(() -> Toast.makeText(MainActivity.this,
-                        String.format("Кот обнаружен! Уверенность: %.0f%%", confidence * 100),
-                        Toast.LENGTH_SHORT).show());
+//                runOnUiThread(() -> Toast.makeText(MainActivity.this,
+//                        String.format("Кот обнаружен! Уверенность: %.0f%%", confidence * 100),
+//                        Toast.LENGTH_SHORT).show());
                 proxyToClose.close();  // Закрываем после успешной обработки
             }
             @Override
@@ -142,6 +148,22 @@ public class MainActivity extends AppCompatActivity {
                 proxyToClose.close();  // Закрываем при ошибке
             }
         });
+    }
+
+    // Получение результата из ChangeSoundActivity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_SELECT_SOUND && resultCode == RESULT_OK) {
+            int selectedSound = data.getIntExtra("selected_music", R.raw.cat_sound_first);
+            this.selectedSoundResId = selectedSound; // сохрани локально
+
+            // можно сразу запустить MainActivity с передачей звука
+            Intent mainIntent = new Intent(this, MainActivity.class);
+            mainIntent.putExtra("sound_res_id", selectedSound);
+            startActivity(mainIntent);
+        }
     }
 
     //При завершении активности освобождаем ресурсы catDetector

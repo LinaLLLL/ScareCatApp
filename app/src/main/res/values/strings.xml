@@ -3,6 +3,9 @@
     <string name="contentDescription">Error</string>
     <string name="btn_detector">Найти кота</string>
     <string name="btn_sound">Выбрать звук</string>
-    <string name="gallery">Галерея</string>
-    <string name="empty_gallery">Галерея пуста</string>
+    <string name="first_sound">Спокойная</string>
+    <string name="second_sound">Сирена</string>
+    <string name="third_sound">Крик</string>
+    <string name="Change_sound">Выберите звук</string>
+    <string name="confirmation">Подтвердить</string>
 </resources>

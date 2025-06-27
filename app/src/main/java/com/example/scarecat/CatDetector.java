@@ -22,42 +22,55 @@ public class CatDetector {
     }
 
     private final ImageLabeler labeler; //распознавание
-    private final MediaPlayer mediaPlayer; //воспроизведение звука
+    private MediaPlayer mediaPlayer; //воспроизведение звука
+    private boolean isCatVisible = false;  // флаг видимости кота
+    private long lastCatSeenTime = 0;
+    private static final long CAT_TIMEOUT_MS = 1500; // сколько ждать, прежде чем выключать звук
+
     //конструктор
-    public CatDetector(Context context) {
+    public CatDetector(Context context, int soundResId) {
         labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
-        mediaPlayer = MediaPlayer.create(context, R.raw.cat_sound);
+        mediaPlayer = MediaPlayer.create(context, soundResId);
     }
 
     public void detectCats(@NonNull InputImage image, DetectionCallback callback) {
         labeler.process(image)  //запуск ассинхронного процесса распознавания
                 .addOnSuccessListener(labels -> { //получаем список меток
-                    boolean catFound = false;
-                    for (ImageLabel label : labels) {  //перебираем список и ищем с текстом "cat"
-                        if ("Cat".equalsIgnoreCase(label.getText()) && label.getConfidence() > 0.5) { //проверяем уверенность больше 50%
-                            catFound = true;
+                    boolean catFoundNow = false;
 
-                            if (!mediaPlayer.isPlaying()) { //если кот найден, запускаем музыку
+                    for (ImageLabel label : labels) {
+                        if ("Cat".equalsIgnoreCase(label.getText()) && label.getConfidence() > 0.5) {
+                            catFoundNow = true;
+                            lastCatSeenTime = System.currentTimeMillis();
+                            if (!mediaPlayer.isPlaying()) {
+                                mediaPlayer.setLooping(true);
                                 mediaPlayer.start();
                             }
-
                             callback.onCatDetected(label.getConfidence());
                             break;
                         }
                     }
-                    if (!catFound) { // кот не найден
-                        callback.onNoCatDetected();
-                        if (mediaPlayer.isPlaying()) { //если музыка играла - выключаем
-                            mediaPlayer.pause();
-                            mediaPlayer.seekTo(0);
+
+                    if (!catFoundNow) {
+                        long timeSinceSeen = System.currentTimeMillis() - lastCatSeenTime;
+
+                        if (timeSinceSeen > CAT_TIMEOUT_MS) {
+                            if (mediaPlayer.isPlaying()) {
+                                mediaPlayer.pause();
+                                mediaPlayer.seekTo(0);
+                            }
+                            callback.onNoCatDetected();
+                        } else {
+                            // кот временно пропал — подождем ещё
+                            callback.onCatDetected(0); // можно использовать 0 как "промежуточный" флаг
                         }
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("CatDetector", "Ошибка детекции", e);
                     callback.onError(e);
                 });
     }
+
     //очистка ресурсов
     public void release() {
         labeler.close();

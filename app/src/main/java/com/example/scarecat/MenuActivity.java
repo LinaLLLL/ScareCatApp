@@ -14,7 +14,8 @@ import androidx.core.view.WindowInsetsCompat;
 public class MenuActivity extends AppCompatActivity {
     Button btn_detector;
     Button btn_sound;
-    Button btn_gallery;
+    private static final int REQUEST_CODE_SELECT_SOUND = 123;
+    private int selectedSoundResId = R.raw.cat_sound_first;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,23 +29,29 @@ public class MenuActivity extends AppCompatActivity {
         });
         btn_detector = findViewById(R.id.btn_detector);
         btn_sound = findViewById(R.id.btn_sound);
-        btn_gallery = findViewById(R.id.btn_gallery);
 
     }
+
     //метод для перехода на страницу распознавания котов
     public void goDetectorActivity(View v){
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("sound_res_id", selectedSoundResId);
         startActivity(intent);
     }
     //метод для перехода на страницу выбора звука
     public void goSoundActivity(View v){
         Intent intent = new Intent(this, ChangeSoundActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_SELECT_SOUND);
     }
-    //метод для перехода на страницу галереи
-    public void goGalleryActivity(View v){
-        Intent intent = new Intent(this, GalleryActivity.class);
-        startActivity(intent);
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_SELECT_SOUND && resultCode == RESULT_OK) {
+            selectedSoundResId = data.getIntExtra("selected_music", R.raw.cat_sound_first);
+        }
     }
 
 }
